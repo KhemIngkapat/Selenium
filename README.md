@@ -7,6 +7,6 @@
     
 ## Guide
     You Can Install All Dependencies With 📄requirements.txt
-    Then Add The .env File To Store Your Email And Password  
+    Then Add The .env File To Store Your 📧Email And 🔑Password  
     Then This Should Do The Trick 🎩🎩🎩
     
