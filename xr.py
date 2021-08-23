@@ -1,3 +1,4 @@
+#import
 from selenium import webdriver
 from selenium.webdriver.common.keys  import Keys
 from selenium.common.exceptions import NoSuchElementException,TimeoutException
@@ -7,31 +8,42 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 import math
+from dotenv import dotenv_values
+
+#define the driver
 
 options = EdgeOptions()
 options.use_chromium = True
 driver = Edge(options=options,executable_path=r'./msedgedriver.exe')
 
-driver.get('https://xreading.com/blocks/institution/assignments.php?id=49381')
+driver.get('https://xreading.com/login/index.php')
+
+config = dotenv_values('.env')
+
+#login
 
 username = driver.find_element_by_xpath('//input[@type="text"]')
 
-username.send_keys('p00948@plearnpattana.ac.th')
+username.send_keys(config['XREADINGEMAIL'])
 
 password = driver.find_element_by_xpath('//input[@type="password"]')
 
-password.send_keys('password')
+password.send_keys(config['XREADINGPASSWORD'])
 
 password.send_keys(Keys.RETURN)
 
+#get the total word
+
 word = driver.find_element_by_xpath('//*[@id="region-main"]/div/div[4]/div/div[1]/div[2]/div[2]/div[1]/ul[1]/li[2]').text
 
+#function to strNum to num
 convertStrToInt = lambda word : int(''.join(word.split(' ')[-1].split(',')))
 
 totalWord = convertStrToInt(word)
 
 print(f'total Word : {totalWord}')
 
+#round int function
 def rounder(num):
 	digit = len(str(num)) -1
 
@@ -39,9 +51,11 @@ def rounder(num):
 
 roundedWord = rounder(totalWord)
 
-roundedTime = roundedWord/230
+roundedTime = roundedWord/230 #word per minutes
 
 roundedTimePerPage = round(roundedTime/5,2)
+
+#click the continue reading or read again(it wont work with read again)
 try:
 	continueRead = driver.find_element_by_xpath('//*[@id="region-main"]/div/div[4]/div/div[1]/div[2]/div[2]/div[2]/a')
 	continueRead.click()
@@ -57,9 +71,15 @@ print(f'roundedWord : {roundedWord}')
 print(f'roundedTime : {roundedTime}')
 print(f'roundedTimePerPage : {roundedTimePerPage}')
 
+#get the start time
+
 startTime = time()
 
+#estimated round of working
+
 print(f'Should Be Working For { math.ceil(roundedTime / (200/60))} Round')
+
+#loop clicking
 
 while (time() - startTime  )/60 < roundedTime:
 	try:
@@ -87,6 +107,8 @@ while (time() - startTime  )/60 < roundedTime:
 			page.send_keys(Keys.HOME)
 			sleep(20)
 		continue
+
+#get to the last page and quit the book
 
 while True:
 	try:
