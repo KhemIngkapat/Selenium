@@ -45,15 +45,13 @@ print(f'total Word : {totalWord}')
 
 #round int function
 def rounder(num):
-	digit = len(str(num)) -1
+	digit = len(str(num)) -2
 
 	return math.ceil(num/(10**digit))*(10**digit)
 
 roundedWord = rounder(totalWord)
 
 roundedTime = roundedWord/230 #word per minutes
-
-roundedTimePerPage = round(roundedTime/5,2)
 
 #click the continue reading or read again(it wont work with read again)
 try:
@@ -69,7 +67,6 @@ except Exception as e:
 
 print(f'roundedWord : {roundedWord}')
 print(f'roundedTime : {roundedTime}')
-print(f'roundedTimePerPage : {roundedTimePerPage}')
 
 #get the start time
 
