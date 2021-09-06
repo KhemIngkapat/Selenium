@@ -97,7 +97,7 @@ while (time() - startTime  )/60 < roundedTime:
 		print(f"Working For : {round((time() - startTime  )/60,2)} Minutes")
 	except TimeoutException:
 		print('Working On One Page AFK')
-		for i in range(100):
+		while (time() - startTime  )/60 < roundedTime:
 			page =driver.find_element_by_tag_name('body')
 			page.send_keys(Keys.END)
 			sleep(20)
