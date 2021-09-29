@@ -96,16 +96,12 @@ while (time() - startTime  )/60 < roundedTime:
 			previousButton.click()
 		print(f"Working For : {round((time() - startTime  )/60,2)} Minutes")
 	except TimeoutException:
-		print('Working On One Page AFK')
-		while (time() - startTime  )/60 < roundedTime:
-			page =driver.find_element_by_tag_name('body')
-			page.send_keys(Keys.END)
-			sleep(20)
-			page.send_keys(Keys.HOME)
-			sleep(20)
+		print('TimeoutException')
 		continue
 
 #get to the last page and quit the book
+
+input('Continue to the final page?')
 
 while True:
 	try:
