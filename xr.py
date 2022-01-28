@@ -15,10 +15,11 @@ from dotenv import dotenv_values
 options = EdgeOptions()
 options.use_chromium = True
 driver = Edge(options=options,executable_path=r'./msedgedriver.exe')
+# driver = webdriver.Chrome(executable_path='./chromedriver.exe')
 
 driver.get('https://xreading.com/login/index.php')
 
-config = dotenv_values('.env')
+config = dotenv_values('personal.env')
 
 #login
 
@@ -79,25 +80,32 @@ print(f'Should Be Working For { math.ceil(roundedTime / (200/60))} Round')
 #loop clicking
 
 while (time() - startTime  )/60 < roundedTime:
-	try:
-		for _ in range(5):
-			sleep(15)
-			page =driver.find_element_by_tag_name('body')
-			page.send_keys(Keys.END)
-			sleep(5)
-			nextButton = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.CLASS_NAME, 'next-slide')))
-			nextButton.click()
-		for _ in range(5):
-			sleep(15)
-			page =driver.find_element_by_tag_name('body')
-			page.send_keys(Keys.HOME)
-			sleep(5)
-			previousButton = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.CLASS_NAME, 'previous-slide')))
-			previousButton.click()
-		print(f"Working For : {round((time() - startTime  )/60,2)} Minutes")
-	except TimeoutException:
-		print('TimeoutException')
-		continue
+	page =driver.find_element_by_tag_name('body')
+
+	page.send_keys(Keys.END)
+	sleep(10)
+	page.send_keys(Keys.HOME)
+	sleep(10)
+	# try:
+	# 	for _ in range(5):
+	# 		sleep(15)
+	# 		page =driver.find_element_by_tag_name('body')
+	# 		page.send_keys(Keys.END)
+	# 		sleep(5)
+	# 		nextButton = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.CLASS_NAME, 'next-slide')))
+	# 		nextButton.click()
+	# 	for _ in range(5):
+	# 		sleep(15)
+	# 		page =driver.find_element_by_tag_name('body')
+	# 		page.send_keys(Keys.HOME)
+	# 		sleep(5)
+	# 		previousButton = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.CLASS_NAME, 'previous-slide')))
+	# 		previousButton.click()
+	# 	print(f"Working For : {round((time() - startTime  )/60,2)} Minutes")
+	# except TimeoutException:
+	# 	print('TimeoutException')
+	# 	continue
+	
 
 #get to the last page and quit the book
 
